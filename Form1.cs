@@ -323,6 +323,11 @@ namespace DarkestQuirks
 
         private void SortQuirks(object sender, EventArgs e)
         {
+            if (!(ch_sortpositive.Checked | ch_sortalphabetic.Checked))
+            {
+                return;
+            }
+
             lbx_quirklist.Items.Clear();
 
             if (ch_sortpositive.Checked)
@@ -340,23 +345,14 @@ namespace DarkestQuirks
 
                 quirks.AddRange(positive);
                 quirks.AddRange(negative);
-
-                lbx_quirklist.Items.AddRange(quirks.Select(a => a.id).ToArray());
-                lbx_quirklist.SelectedItem = tbx_quirkid.Text;
-
-                return;
             }
             else if (ch_sortalphabetic.Checked)
             {
                 quirks = quirks.OrderBy(a => a.id).ToList();
             }
-            else
-            {
-                quirks = quirk_data.quirks.ToList();
-            }
 
             lbx_quirklist.Items.AddRange(quirks.Select(a => a.id).ToArray());
-            lbx_quirklist.SelectedItem = tbx_quirkid.Text;
+            lbx_quirklist.SelectedItem = tbx_quirkid.Text.ToLower().Replace(" ", "");
         }
 
         private void chb_editmode_CheckedChanged(object sender, EventArgs e)
@@ -482,33 +478,12 @@ namespace DarkestQuirks
         {
             if (tbx_quirkid.Text.Length == 0)
             {
-                tc_properties.SelectedTab = tc_properties.TabPages[0];
-
                 tooltip_warning.Show(
                     "Quirk needs a valid a name:\nexample_quirk",
                     tbx_quirkid, 3000);
                 return;
             }
-
-            string item_id = tbx_quirkid.Text.ToLower().Replace("  ", "").Replace(' ', '_');
-            while (item_id.Contains(" "))
-            {
-                item_id = item_id.Replace(" ", "");
-            }
-
-            if (lbx_quirklist.Items.Contains(item_id))
-            {
-                tc_properties.SelectedTab = tc_properties.TabPages[0];
-
-                tooltip_warning.Show(
-                    "Quirk already exists",
-                    tbx_quirkid, 3000);
-
-                lbx_quirklist.SelectedItem = item_id;
-
-                return;
-            }
-
+            
             if (!ch_showdesc.Checked && rtb_description.Text.Length == 0)
             {
                 tc_properties.SelectedTab = tc_properties.TabPages[1];
@@ -539,7 +514,7 @@ namespace DarkestQuirks
                     if (cbx_curiotags.SelectedIndex == 1)
                     {
                         tooltip_warning.Show(
-                            "Must create 3 valid quotes if using the \"All\" tag.\nElse set the tag to (none)",
+                            "Must create 3 valid quotes if using the \"All\" curio tag.\nElse set the tag to (none)",
                             rtb_curiodialog1, 4000);
                         return;
                     }
@@ -548,6 +523,25 @@ namespace DarkestQuirks
                         "Must create a valid quote if a tag is set.\nElse set the tag to (none)",
                         rtb_curiodialog1, 4000);
                 }
+
+                return;
+            }
+
+            string item_id = tbx_quirkid.Text.ToLower().Replace("  ", "").Replace(' ', '_');
+            while (item_id.Contains(" "))
+            {
+                item_id = item_id.Replace(" ", "");
+            }
+
+            if (lbx_quirklist.Items.Contains(item_id))
+            {
+                if (MessageBox.Show("Quirk already exists. Modify existing quirk instead?", "Notice", MessageBoxButtons.YesNo) ==
+                    System.Windows.Forms.DialogResult.Yes)
+                {
+                    ModifyExistingQuirk(item_id);
+                }
+
+                lbx_quirklist.SelectedItem = item_id;
 
                 return;
             }
@@ -573,17 +567,171 @@ namespace DarkestQuirks
 
             quirks.Add(q);
 
-            descriptions.XPathSelectElement(
-                ".//entry[@id = \"" +
-                "str_quirk_name_" +
-                item_id +
-                "\"]").Remove();
+            XElement entry = new XElement("entry", "");
+            XAttribute attr = new XAttribute("id", "");
+            entry.Add(attr);
+            XCData data = new XCData("");
+            entry.Add(data);
+
+            string s;
+
+            attr.Value = "str_quirk_name_" + item_id;
+
+            s = tbx_quirkid.Text;
+            while (s.Contains("  "))
+            {
+                s.Replace("  ", "");
+            }
+
+            data.Value = s;
+
+            descriptions
+                .XPathSelectElement(".//language")
+                .Add(entry);
 
             if (!ch_showdesc.Checked)
             {
-                XElement entry = new XElement("entry",
-                    new XAttribute("id", "str_quirk_description_" + item_id));
-                entry.Add(new XCData(rtb_description.Text.Replace('\n', ' ')));
+                attr.Value = "str_quirk_description_" + item_id;
+
+                s = rtb_description.Text.Replace('\n', ' ');
+                while (s.Contains("  "))
+                {
+                    s.Replace("  ", "");
+                }
+
+                data.Value = s;
+
+                descriptions
+                    .XPathSelectElement(".//language")
+                    .Add(entry);
+            }
+
+            attr.Value = "trigger_curio_quirk_" + item_id;
+            switch (cbx_curiotags.SelectedIndex)
+            {
+                case 0: break;
+
+                case 1:
+
+                    if (rtb_curiodialog1.Text.Length > 0)
+                    {
+                        s = rtb_curiodialog1.Text.Replace('\n', ' ');
+                        while (s.Contains("  "))
+                        {
+                            s.Replace("  ", "");
+                        }
+
+                        data.Value = s;
+                            
+                        dialogue
+                            .XPathSelectElement(".//language")
+                            .Add(entry);
+                    }
+
+                    if (rtb_curiodialog2.Text.Length > 0)
+                    {
+                        s = rtb_curiodialog2.Text.Replace('\n', ' ');
+                        while (s.Contains("  "))
+                        {
+                            s.Replace("  ", "");
+                        }
+
+                        data.Value = s;
+
+                        dialogue
+                            .XPathSelectElement(".//language")
+                            .Add(entry);
+                    }
+
+                    if (rtb_curiodialog3.Text.Length > 0)
+                    {
+                        s = rtb_curiodialog3.Text.Replace('\n', ' ');
+                        while (s.Contains("  "))
+                        {
+                            s.Replace("  ", "");
+                        }
+
+                        data.Value = s;
+
+                        dialogue
+                            .XPathSelectElement(".//language")
+                            .Add(entry);
+                    }
+
+                    break;
+
+                default:
+                    s = rtb_curiodialog1.Text.Replace('\n', ' ');
+                        while (s.Contains("  "))
+                        {
+                            s.Replace("  ", "");
+                        }
+
+                        data.Value = s;
+                            
+                        dialogue
+                            .XPathSelectElement(".//language")
+                            .Add(entry);
+
+                    break;
+            }
+
+            SortQuirks(this, null);
+        }
+
+        private void ModifyExistingQuirk(string item)
+        {
+            Quirk q = quirks.FirstOrDefault(
+                x => x.id == item);
+
+            if (q == null)
+            {
+                return;
+            }
+
+            q.show_explicit_description = ch_showdesc.Checked;
+            q.is_positive = ch_positive.Checked;
+            q.is_disease = ch_disease.Checked;
+            q.classification = tbx_class.Text;
+            q.curio_tag = cbx_curiotags.SelectedIndex == 0 ?
+                "" : (string)cbx_curiotags.SelectedItem;
+            q.curio_tag_chance = num_curiotagchance.Value;
+            q.keep_loot = ch_keeploot.Checked;
+
+            q.incompatible_quirks = new string[lbx_incompatible.Items.Count];
+            lbx_incompatible.Items.CopyTo(q.incompatible_quirks, 0);
+
+            q.buffs = new string[lbx_buffs.Items.Count];
+            lbx_buffs.Items.CopyTo(q.buffs, 0);
+
+            if (ch_showdesc.Checked)
+            {
+                descriptions.XPathSelectElement(
+                    ".//entry[@id = \"" +
+                    "str_quirk_description_" +
+                    item +
+                    "\"]").Remove();
+            }
+            
+            XElement entry = new XElement("entry", "");
+            XAttribute attr = new XAttribute("id", "");
+            entry.Add(attr);
+            XCData data = new XCData("");
+            entry.Add(data);
+
+            string s;
+            
+            if (!ch_showdesc.Checked)
+            {
+                attr.Value = "str_quirk_description_" + item;
+
+                s = rtb_description.Text.Replace('\n', ' ');
+                while (s.Contains("  "))
+                {
+                    s.Replace("  ", "");
+                }
+
+                data.Value = s;
 
                 descriptions
                     .XPathSelectElement(".//language")
@@ -592,21 +740,29 @@ namespace DarkestQuirks
 
             if (cbx_curiotags.SelectedIndex != 0)
             {
-                XElement entry = new XElement("entry",
-                    new XAttribute("id", "trigger_curio_quirk_" + item_id));
-                XCData data = new XCData("");
-                entry.Add(data);
+                descriptions.XPathSelectElements(
+                    ".//entry[@id = \"" +
+                    "str_trigger_curio_quirk_" +
+                    item +
+                    "\"]").Remove();
 
-                string quote = "";
-
+                attr.Value = "trigger_curio_quirk_" + item;
                 switch (cbx_curiotags.SelectedIndex)
                 {
+                    case 0: break;
+
                     case 1:
 
                         if (rtb_curiodialog1.Text.Length > 0)
                         {
-                            quote = rtb_curiodialog1.Text.Replace('\n', ' ').Replace("  ", "");
-                            data.Value = quote;
+                            s = rtb_curiodialog1.Text.Replace('\n', ' ');
+                            while (s.Contains("  "))
+                            {
+                                s.Replace("  ", "");
+                            }
+
+                            data.Value = s;
+
                             dialogue
                                 .XPathSelectElement(".//language")
                                 .Add(entry);
@@ -614,8 +770,14 @@ namespace DarkestQuirks
 
                         if (rtb_curiodialog2.Text.Length > 0)
                         {
-                            quote = rtb_curiodialog2.Text.Replace('\n', ' ').Replace("  ", "");
-                            data.Value = quote;
+                            s = rtb_curiodialog2.Text.Replace('\n', ' ');
+                            while (s.Contains("  "))
+                            {
+                                s.Replace("  ", "");
+                            }
+
+                            data.Value = s;
+
                             dialogue
                                 .XPathSelectElement(".//language")
                                 .Add(entry);
@@ -623,8 +785,14 @@ namespace DarkestQuirks
 
                         if (rtb_curiodialog3.Text.Length > 0)
                         {
-                            quote = rtb_curiodialog3.Text.Replace('\n', ' ').Replace("  ", "");
-                            data.Value = quote;
+                            s = rtb_curiodialog3.Text.Replace('\n', ' ');
+                            while (s.Contains("  "))
+                            {
+                                s.Replace("  ", "");
+                            }
+
+                            data.Value = s;
+
                             dialogue
                                 .XPathSelectElement(".//language")
                                 .Add(entry);
@@ -633,8 +801,14 @@ namespace DarkestQuirks
                         break;
 
                     default:
-                        quote = rtb_curiodialog1.Text.Replace('\n', ' ').Replace("  ", "");
-                        data.Value = quote;
+                        s = rtb_curiodialog1.Text.Replace('\n', ' ');
+                        while (s.Contains("  "))
+                        {
+                            s.Replace("  ", "");
+                        }
+
+                        data.Value = s;
+
                         dialogue
                             .XPathSelectElement(".//language")
                             .Add(entry);
@@ -742,7 +916,8 @@ namespace DarkestQuirks
 
         private void RemoveQuirk(string item)
         {
-            if (MessageBox.Show("Really remove this quirk?", "Confirm", MessageBoxButtons.YesNo) ==
+            if (MessageBox.Show("Really remove " + tbx_quirkid.Text + "?", 
+                "Confirm", MessageBoxButtons.YesNo) ==
                 System.Windows.Forms.DialogResult.No)
             {
                 return;
@@ -757,17 +932,35 @@ namespace DarkestQuirks
                 item +
                 "\"]").Remove();
 
-            descriptions.XPathSelectElement(
+            var desc = descriptions.XPathSelectElement(
+                ".//entry[@id = \"" +
+                "str_quirk_description_" +
+                item +
+                "\"]");
+
+            if (desc != null)
+            {
+                descriptions.XPathSelectElement(
                 ".//entry[@id = \"" +
                 "str_quirk_description_" +
                 item +
                 "\"]").Remove();
+            }
 
-            dialogue.XPathSelectElements(
+            var quotes = dialogue.XPathSelectElements(
+                ".//entry[@id = \"" +
+                "trigger_curio_quirk_" +
+                item +
+                "\"]");
+
+            if (quotes != null)
+            {
+                dialogue.XPathSelectElements(
                 ".//entry[@id = \"" +
                 "trigger_curio_quirk_" +
                 item +
                 "\"]").Remove();
+            }
 
             SortQuirks(this, null);
         }
