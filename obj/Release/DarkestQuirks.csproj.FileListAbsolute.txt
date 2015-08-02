@@ -1,0 +1,10 @@
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Release\DarkestQuirks.exe.config
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Release\DarkestQuirks.exe
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Release\DarkestQuirks.pdb
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Release\Newtonsoft.Json.dll
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Release\Newtonsoft.Json.xml
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Release\DarkestQuirks.Form1.resources
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Release\DarkestQuirks.Properties.Resources.resources
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Release\DarkestQuirks.csproj.GenerateResource.Cache
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Release\DarkestQuirks.exe
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Release\DarkestQuirks.pdb

@@ -1,0 +1,14 @@
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Debug\DarkestQuirks.exe.config
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Debug\DarkestQuirks.exe
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Debug\DarkestQuirks.pdb
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Debug\DarkestQuirks.csprojResolveAssemblyReference.cache
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Debug\DarkestQuirks.Form1.resources
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Debug\DarkestQuirks.Properties.Resources.resources
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Debug\DarkestQuirks.csproj.GenerateResource.Cache
+D:\SteamLibrary\steamapps\common\DarkestDungeon\DarkestQuirks.exe.config
+D:\SteamLibrary\steamapps\common\DarkestDungeon\DarkestQuirks.exe
+D:\SteamLibrary\steamapps\common\DarkestDungeon\DarkestQuirks.pdb
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Debug\DarkestQuirks.exe
+C:\Users\Loc\Documents\Visual Studio 2013\Projects\_CSHARP_FORMS\DarkestQuirks\DarkestQuirks\obj\Debug\DarkestQuirks.pdb
