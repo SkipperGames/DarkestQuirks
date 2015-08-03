@@ -16,7 +16,7 @@ This app is free to use, modify, and redistribute.
 Please send feature requests, feedback, and bug reports to the official thread at the [Steam forums](http://steamcommunity.com/app/262060/discussions/4/541907675758877301/).
 
 ## Usage Info
-- You must move this application to the game's root installation folder for it to work.
+- You must move this application, along with "Newtonsoft.Json.dll" to the game's root installation folder for it to work.
 - Hover over labels for helpful tooltips.
 
 ## Contributing
