@@ -2,7 +2,7 @@
 A quirk editing app for Darkest Dungeon PC/Steam for changing, adding, or removing quirks.
 
 ## Legal Statement
-* **Darkest Quirks** is not an official Red Hook Studios product or product modification, and Red Hook Studios Inc. is not responsible in any way for changes or damages that may result from using the mod. Furthermore, “Darkest Dungeon” and the Darkest Dungeon logo are trademarks of Red Hook Studios Inc. All content in the game is Copyright Red Hook Studios Inc. All rights reserved.*
+*Darkest Quirks is not an official Red Hook Studios product or product modification, and Red Hook Studios Inc. is not responsible in any way for changes or damages that may result from using the mod. Furthermore, “Darkest Dungeon” and the Darkest Dungeon logo are trademarks of Red Hook Studios Inc. All content in the game is Copyright Red Hook Studios Inc. All rights reserved.*
 
 Do not pay for this app. If you see someone monetizing from it, please report at the [Steam forums](http://steamcommunity.com/app/262060/discussions/4/541907675758877301/).
 
